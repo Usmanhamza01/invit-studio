@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#12100E">
+<title>Invit'Studio — Générateur premium</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500&family=Tangerine:wght@400;700&family=Parisienne&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ===== SHELL ADMIN ===== */
+:root{--abg:#12100E;--apanel:#1B1815;--aline:#2E2A24;--aink:#EDE6D8;--asoft:#A79B87;--agold:#C9A44C;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body.app{font-family:'Inter',sans-serif;background:var(--abg);color:var(--aink);overflow:hidden;}
+.shell{display:flex;height:100vh;height:100dvh;}
+.side{width:380px;max-width:44vw;background:var(--apanel);border-right:1px solid var(--aline);display:flex;flex-direction:column;overflow:hidden;}
+.side-h{padding:18px 20px;border-bottom:1px solid var(--aline);display:flex;align-items:center;justify-content:space-between;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;}
+.logo b{color:var(--agold);}
+.badge{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--asoft);border:1px solid var(--aline);padding:4px 9px;border-radius:999px;}
+.side-b{flex:1;overflow-y:auto;padding:18px 20px 40px;}
+.side-b::-webkit-scrollbar{width:8px;}.side-b::-webkit-scrollbar-thumb{background:var(--aline);border-radius:8px;}
+.sh{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--agold);margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--aline);}
+.sh:first-child{margin-top:0;}
+.field{margin-bottom:15px;}
+.field label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--asoft);margin-bottom:7px;}
+.field input,.field select{width:100%;background:#0E0C0A;border:1px solid var(--aline);color:var(--aink);padding:10px 12px;font-family:'Inter',sans-serif;font-size:14px;border-radius:8px;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--agold);}
+.frow{display:flex;gap:10px;}.frow .field{flex:1;}
+.models{display:flex;flex-direction:column;gap:10px;}
+.model-opt{display:flex;gap:12px;align-items:center;border:1px solid var(--aline);border-radius:10px;padding:10px;cursor:pointer;background:#0E0C0A;transition:border-color .2s;}
+.model-opt.active{border-color:var(--agold);background:#151109;}
+.model-opt .thumb{width:44px;height:60px;border-radius:5px;background-size:cover;background-position:center;flex-shrink:0;border:1px solid rgba(255,255,255,.1);}
+.model-opt .mi{flex:1;}
+.model-opt .mn{font-size:14px;font-weight:500;}
+.model-opt .md{font-size:11px;color:var(--asoft);margin-top:2px;}
+.toggle{display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--aline);}
+.toggle span{font-size:14px;}
+.sw{position:relative;width:44px;height:24px;flex-shrink:0;}
+.sw input{opacity:0;width:0;height:0;}
+.sl{position:absolute;inset:0;background:#2E2A24;border-radius:999px;cursor:pointer;transition:.2s;}
+.sl::before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;}
+.sw input:checked + .sl{background:var(--agold);}
+.sw input:checked + .sl::before{transform:translateX(20px);}
+.venue-ed{border:1px solid var(--aline);border-radius:10px;padding:12px;margin-bottom:10px;background:#0E0C0A;}
+.venue-ed .vh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.venue-ed .vh b{font-size:11px;letter-spacing:.08em;color:var(--asoft);text-transform:uppercase;}
+.venue-ed .rm{background:none;border:none;color:#C77;cursor:pointer;font-size:15px;}
+.add-v{width:100%;background:transparent;border:1px dashed var(--aline);color:var(--asoft);padding:11px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:13px;margin-bottom:8px;}
+.add-v:hover{border-color:var(--agold);color:var(--agold);}
+.actions{position:sticky;bottom:0;background:var(--apanel);padding:14px 0 4px;margin-top:20px;border-top:1px solid var(--aline);display:flex;gap:8px;flex-wrap:wrap;}
+.btn{flex:1;min-width:110px;border:none;border-radius:8px;padding:12px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;}
+.btn-p{background:var(--agold);color:#12100E;}
+.btn-g{background:transparent;border:1px solid var(--aline);color:var(--aink);}
+.btn-g:hover{border-color:var(--agold);}
+.prev{flex:1;display:flex;flex-direction:column;background:#0A0908;overflow:hidden;}
+.prev-top{padding:12px 20px;border-bottom:1px solid var(--aline);display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.prev-top .pt{font-size:13px;color:var(--asoft);}
+.ptabs{display:flex;gap:6px;}
+.ptab{background:transparent;border:1px solid var(--aline);color:var(--asoft);padding:6px 12px;border-radius:999px;font-size:12px;cursor:pointer;}
+.ptab.active{border-color:var(--agold);color:var(--agold);}
+.stage-w{flex:1;display:flex;align-items:center;justify-content:center;padding:24px;overflow:auto;}
+.device{width:380px;height:760px;max-height:88vh;background:#000;border-radius:44px;padding:12px;box-shadow:0 40px 80px -30px rgba(0,0,0,.7);flex-shrink:0;}
+.device iframe{width:100%;height:100%;border:none;border-radius:34px;background:#fff;}
+.json-w{width:100%;height:100%;background:#0E0C0A;color:#9FE7B0;border:1px solid var(--aline);border-radius:12px;padding:16px;font-family:ui-monospace,monospace;font-size:12px;resize:none;}
+@media(max-width:860px){
+  .shell{flex-direction:column;}
+  .side{width:100%;max-width:100%;height:auto;flex:1;order:2;border-right:none;border-top:1px solid var(--aline);}
+  .prev{order:1;flex:0 0 auto;height:46vh;}
+  .device{width:220px;height:auto;aspect-ratio:9/19;border-radius:28px;padding:7px;}
+  .device iframe{border-radius:22px;}
+}
+</style>
+</head>
+<body class="app">
+<div class="shell">
+  <aside class="side">
+    <div class="side-h"><div class="logo">Invit'<b>Studio</b></div><div class="badge" id="saveState">Nouveau</div></div>
+    <div class="side-b">
+      <div class="sh">Modèle</div>
+      <div class="models" id="models">
+        <div class="model-opt active" data-model="ivoire">
+          <div class="thumb" style="background-image:url('assets/ivoire-gatefold.webp')"></div>
+          <div class="mi"><div class="mn">Ivoire Élégant</div><div class="md">Enveloppe brodée · sceau doré</div></div>
+        </div>
+        <div class="model-opt" data-model="nikkah">
+          <div class="thumb" style="background-image:url('assets/nikkah-cover.webp')"></div>
+          <div class="mi"><div class="mn">Nikkah Doré</div><div class="md">Arche orientale · mosquée</div></div>
+        </div>
+        <div class="model-opt" data-model="floral">
+          <div class="thumb" style="background-image:url('assets/floral-fond.webp')"></div>
+          <div class="mi"><div class="mn">Floral Bleu</div><div class="md">Toile de Jouy · porcelaine</div></div>
+        </div>
+      </div>
+
+      <div class="sh">Le couple</div>
+      <div class="frow">
+        <div class="field"><label>Prénom 1</label><input id="f_name1" value="Aïssatou"></div>
+        <div class="field"><label>Prénom 2</label><input id="f_name2" value="Moussa"></div>
+      </div>
+      <div class="field"><label>Message d'accueil</label><input id="f_eyebrow" value="Nous vous convions au mariage de"></div>
+      <div class="frow">
+        <div class="field"><label>Date</label><input id="f_date" value="12 · 12 · 2026"></div>
+        <div class="field"><label>Lieu (ville)</label><input id="f_city" value="Dakar, Sénégal"></div>
+      </div>
+
+      <div class="sh">Les lieux</div>
+      <div id="venueList"></div>
+      <button class="add-v" id="addVenue">+ Ajouter un lieu</button>
+
+      <div class="sh">Options</div>
+      <label class="toggle"><span>Invitation à la réception</span><span class="sw"><input type="checkbox" id="t_reception"><span class="sl"></span></span></label>
+      <div id="recWrap" style="display:none;">
+        <div class="field" style="margin-top:12px;"><label>Titre réception</label><input id="f_rec_title" value="Réception & Dîner"></div>
+        <div class="field"><label>Détail (heure · lieu)</label><input id="f_rec_detail" value="20h00 · Radisson Blu, Sea Plaza, Dakar"></div>
+        <div class="frow">
+          <div class="field"><label>Latitude</label><input id="f_rec_lat" value="14.7167"></div>
+          <div class="field"><label>Longitude</label><input id="f_rec_lng" value="-17.4677"></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-p" id="btnSave">Enregistrer</button>
+        <button class="btn btn-g" id="btnExport">Exporter</button>
+        <button class="btn btn-g" id="btnImport">Importer</button>
+        <button class="btn btn-g" id="btnNew">Nouveau</button>
+      </div>
+    </div>
+  </aside>
+
+  <main class="prev">
+    <div class="prev-top">
+      <div class="pt" id="prevTitle">Aperçu en direct</div>
+      <div class="ptabs"><button class="ptab active" data-view="render">Rendu</button><button class="ptab" data-view="json">JSON</button></div>
+    </div>
+    <div class="stage-w" id="stageRender"><div class="device"><iframe id="frame"></iframe></div></div>
+    <div class="stage-w" id="stageJson" style="display:none;"><textarea class="json-w" id="jsonView" spellcheck="false"></textarea></div>
+  </main>
+</div>
+<input type="file" id="importFile" accept="application/json" style="display:none;">
+<script>
+const DEFAULT = () => ({
+  model:"ivoire", name1:"Aïssatou", name2:"Moussa",
+  eyebrow:"Nous vous convions au mariage de",
+  date:"12 · 12 · 2026", city:"Dakar, Sénégal",
+  venues:[
+    {tag:"10h00", title:"Maison du marié", detail:"Ouakam, Dakar", lat:"14.7245", lng:"-17.4913"},
+    {tag:"13h00", title:"Mosquée", detail:"Ouakam, Dakar", lat:"14.7180", lng:"-17.4890"},
+    {tag:"15h00", title:"Maison de la mariée", detail:"Point E, Dakar", lat:"14.6928", lng:"-17.4645"}
+  ],
+  reception:false, recTitle:"Réception & Dîner",
+  recDetail:"20h00 · Radisson Blu, Sea Plaza, Dakar", recLat:"14.7167", recLng:"-17.4677"
+});
+let data = DEFAULT();
+
+const MODELS = {
+  ivoire: { cover:"assets/ivoire-gatefold.webp", fond:"assets/ivoire-cover.webp",
+    bg:"#EFE6D5", ink:"#4A3F2E", accent:"#B8934E", script:"'Tangerine',cursive", serif:"'Cormorant Garamond',serif", open:"gatefold" },
+  nikkah: { cover:"assets/nikkah-cover.webp", fond:"assets/nikkah-fond.webp",
+    bg:"#EFE1C7", ink:"#5B4A32", accent:"#C6A15B", script:"'Parisienne',cursive", serif:"'Cormorant Garamond',serif", open:"fade" },
+  floral: { cover:"assets/floral-fond.webp", fond:"assets/floral-fond.webp",
+    bg:"#F5EFE2", ink:"#22304F", accent:"#B9995B", script:"'Parisienne',cursive", serif:"'Cormorant Garamond',serif", open:"fade" }
+};
+
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function buildHTML(d){
+  const m = MODELS[d.model];
+  const venues = d.venues.map(v=>`
+    <div class="vcard">
+      <div class="vt">${esc(v.tag)}</div>
+      <div class="vn">${esc(v.title)}</div>
+      <div class="vd">${esc(v.detail)}</div>
+      <div class="vbtns" data-lat="${esc(v.lat)}" data-lng="${esc(v.lng)}"></div>
+    </div>`).join("");
+  const reception = d.reception ? `
+    <div class="recep" id="reception">
+      <div class="rk">${esc(d.recTitle)}</div>
+      <div class="rd">${esc(d.recDetail)}</div>
+      <div class="vbtns" data-lat="${esc(d.recLat)}" data-lng="${esc(d.recLng)}"></div>
+      <div class="rp">Invitation personnelle — merci de ne pas transférer</div>
+    </div>` : "";
+
+  // cover markup depends on open type
+  let coverInner;
+  if(m.open === "gatefold"){
+    coverInner = `
+      <div class="gf-half left" style="background-image:url('${m.cover}')"></div>
+      <div class="gf-half right" style="background-image:url('${m.cover}')"></div>
+      <div class="glow"></div>`;
+  } else {
+    coverInner = `
+      <div class="cover-img" style="background-image:url('${m.cover}')"></div>
+      <div class="glow"></div>`;
+  }
+
+  return `<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500&family=Tangerine:wght@400;700&family=Parisienne&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:${m.bg};--ink:${m.ink};--accent:${m.accent};--script:${m.script};--serif:${m.serif};--ease:cubic-bezier(.4,0,.2,1);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);font-family:'EB Garamond',serif;color:var(--ink);scroll-behavior:smooth;}
+  .stage{max-width:460px;margin:0 auto;position:relative;min-height:100vh;overflow:hidden;}
+
+  #cover{position:fixed;inset:0;z-index:400;overflow:hidden;transition:opacity 1s var(--ease) .4s,visibility 1s .4s;}
+  #cover.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+  .cover-img{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform 1.4s var(--ease),opacity 1s var(--ease);}
+  #cover.opening .cover-img{transform:scale(1.15);opacity:0;}
+  .gf-half{position:absolute;top:0;height:100%;width:50%;background-size:cover;transition:transform 1.5s var(--ease);backface-visibility:hidden;}
+  .gf-half.left{left:0;background-position:left center;transform-origin:left center;}
+  .gf-half.right{right:0;background-position:right center;transform-origin:right center;}
+  #cover.opening .gf-half.left{transform:rotateY(-108deg);}
+  #cover.opening .gf-half.right{transform:rotateY(108deg);}
+  .glow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,rgba(255,240,200,1),rgba(230,190,110,0) 70%);opacity:0;z-index:2;}
+  #cover.opening .glow{animation:glow 1.6s var(--ease) forwards;}
+  @keyframes glow{0%{opacity:0;transform:translate(-50%,-50%) scale(0)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(22)}}
+  .cover-hint{position:absolute;bottom:38px;left:0;right:0;text-align:center;z-index:3;font-family:var(--serif);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+  .prog{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:110px;height:2px;background:rgba(0,0,0,.12);overflow:hidden;z-index:3;}
+  .prog::after{content:"";position:absolute;left:0;top:0;height:100%;width:0;background:var(--accent);animation:fill 2s linear forwards;}
+  @keyframes fill{to{width:100%}}
+
+  .hero{position:relative;min-height:100vh;background-image:url('${m.fond}');background-size:cover;background-position:center;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 34px;}
+  .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.35));}
+  .hero > *{position:relative;z-index:2;}
+  .hero .eyebrow{font-family:var(--serif);font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);}
+  .hero h1{font-family:var(--script);font-size:74px;line-height:.82;color:var(--accent);margin:8px 0;text-shadow:0 1px 12px rgba(255,255,255,.5);}
+  .hero .amp{display:block;font-size:40px;}
+  .hero .date{font-family:var(--serif);font-size:15px;letter-spacing:.22em;color:var(--ink);margin-top:14px;}
+  .hero .place{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--accent);margin-top:4px;}
+  .hero .scroll{margin-top:36px;font-family:var(--serif);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink);opacity:.7;}
+  .hero .scroll::after{content:"⌄";display:block;font-size:18px;animation:bob 1.8s infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+  section{padding:64px 30px;text-align:center;position:relative;}
+  .kick{font-family:var(--serif);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;}
+  .vcard{background:rgba(255,255,255,.55);border:1px solid var(--accent);padding:20px;margin-bottom:14px;}
+  .vt{font-family:var(--serif);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
+  .vn{font-family:var(--serif);font-size:23px;color:var(--ink);margin:3px 0;}
+  .vd{font-family:'EB Garamond',serif;font-size:14px;color:var(--ink);opacity:.8;}
+  .vbtns{display:flex;gap:10px;justify-content:center;margin-top:12px;}
+  .nb{flex:1;max-width:120px;text-align:center;font-family:var(--serif);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);border:1px solid var(--accent);padding:9px;text-decoration:none;}
+  .recep{margin:20px 24px 40px;border:1px solid var(--accent);padding:28px 24px;text-align:center;background:rgba(255,255,255,.5);}
+  .rk{font-family:var(--script);font-size:32px;color:var(--accent);}
+  .rd{font-family:'EB Garamond',serif;font-size:14px;color:var(--ink);opacity:.85;margin-top:4px;}
+  .rp{font-family:var(--serif);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);opacity:.6;margin-top:14px;}
+  footer{text-align:center;padding:36px;font-family:var(--script);font-size:34px;color:var(--accent);}
+  .rise{opacity:0;transform:translateY(18px);transition:.8s var(--ease);}
+  .rise.in{opacity:1;transform:none;}
+</style></head><body>
+<div id="cover"><div class="cover-wrap" id="coverTap" style="position:absolute;inset:0;cursor:pointer;">${coverInner}
+  <div class="cover-hint">Ouverture en cours…</div><div class="prog"></div></div></div>
+<div class="stage">
+  <section class="hero" id="hero">
+    <div class="eyebrow">${esc(d.eyebrow)}</div>
+    <h1>${esc(d.name1)}<span class="amp">&amp;</span>${esc(d.name2)}</h1>
+    <div class="date">${esc(d.date)}</div>
+    <div class="place">${esc(d.city)}</div>
+    <div class="scroll">Défiler</div>
+  </section>
+  <section>
+    <div class="kick">Le déroulé</div>
+    <div class="rise">${venues}</div>
+  </section>
+  ${reception}
+  <footer>${esc(d.name1)} &amp; ${esc(d.name2)}</footer>
+</div>
+<scr${""}ipt>
+  const cover=document.getElementById('cover');let opened=false;
+  function op(){if(opened)return;opened=true;cover.classList.add('opening');setTimeout(()=>cover.classList.add('hidden'),1900);}
+  const t=setTimeout(op,2000);
+  document.getElementById('coverTap').addEventListener('click',()=>{clearTimeout(t);op();});
+  const pin='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:12px;height:12px;vertical-align:-1px"><path d="M12 22s7-7.58 7-13A7 7 0 0 0 5 9c0 5.42 7 13 7 13Z"/><circle cx="12" cy="9" r="2.4"/></svg>';
+  document.querySelectorAll('.vbtns[data-lat]').forEach(r=>{
+    const la=r.dataset.lat,ln=r.dataset.lng;if(!la||!ln)return;
+    r.innerHTML='<a class="nb" target="_blank" href="https://www.google.com/maps/search/?api=1&query='+la+','+ln+'">'+pin+' Maps</a><a class="nb" target="_blank" href="https://waze.com/ul?ll='+la+','+ln+'&navigate=yes">Waze</a>';
+  });
+  const ob=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.15});
+  document.querySelectorAll('.rise').forEach(el=>ob.observe(el));
+<\/scr${""}ipt>
+</body></html>`;
+}
+
+function render(){
+  document.getElementById("frame").srcdoc = buildHTML(data);
+  document.getElementById("jsonView").value = JSON.stringify(data,null,2);
+  document.getElementById("prevTitle").textContent = data.name1+" & "+data.name2+" — "+data.model;
+}
+
+// bindings
+[["f_name1","name1"],["f_name2","name2"],["f_eyebrow","eyebrow"],["f_date","date"],["f_city","city"],
+ ["f_rec_title","recTitle"],["f_rec_detail","recDetail"],["f_rec_lat","recLat"],["f_rec_lng","recLng"]].forEach(([id,k])=>{
+  const el=document.getElementById(id);if(el)el.addEventListener("input",()=>{data[k]=el.value;render();});
+});
+document.querySelectorAll(".model-opt").forEach(o=>o.addEventListener("click",()=>{
+  document.querySelectorAll(".model-opt").forEach(x=>x.classList.remove("active"));
+  o.classList.add("active");data.model=o.dataset.model;render();
+}));
+function renderVenues(){
+  const L=document.getElementById("venueList");L.innerHTML="";
+  data.venues.forEach((v,i)=>{
+    const d=document.createElement("div");d.className="venue-ed";
+    d.innerHTML=`<div class="vh"><b>Lieu ${i+1}</b><button class="rm" data-rm="${i}">✕</button></div>
+      <div class="field"><label>Étiquette</label><input data-v="${i}" data-k="tag" value="${(v.tag||'').replace(/"/g,'&quot;')}"></div>
+      <div class="field"><label>Titre</label><input data-v="${i}" data-k="title" value="${(v.title||'').replace(/"/g,'&quot;')}"></div>
+      <div class="field"><label>Détail</label><input data-v="${i}" data-k="detail" value="${(v.detail||'').replace(/"/g,'&quot;')}"></div>
+      <div class="frow"><div class="field"><label>Lat</label><input data-v="${i}" data-k="lat" value="${v.lat||''}"></div>
+      <div class="field"><label>Lng</label><input data-v="${i}" data-k="lng" value="${v.lng||''}"></div></div>`;
+    L.appendChild(d);
+  });
+  L.querySelectorAll("input[data-v]").forEach(inp=>inp.addEventListener("input",()=>{data.venues[+inp.dataset.v][inp.dataset.k]=inp.value;render();}));
+  L.querySelectorAll("[data-rm]").forEach(b=>b.addEventListener("click",()=>{data.venues.splice(+b.dataset.rm,1);renderVenues();render();}));
+}
+document.getElementById("addVenue").addEventListener("click",()=>{data.venues.push({tag:"Heure",title:"Nouveau lieu",detail:"Adresse",lat:"14.6928",lng:"-17.4467"});renderVenues();render();});
+const tRec=document.getElementById("t_reception");
+tRec.addEventListener("change",()=>{data.reception=tRec.checked;document.getElementById("recWrap").style.display=tRec.checked?"block":"none";render();});
+function sync(){
+  ["name1|f_name1","name2|f_name2","eyebrow|f_eyebrow","date|f_date","city|f_city","recTitle|f_rec_title","recDetail|f_rec_detail","recLat|f_rec_lat","recLng|f_rec_lng"].forEach(p=>{const[k,id]=p.split("|");const e=document.getElementById(id);if(e)e.value=data[k];});
+  tRec.checked=data.reception;document.getElementById("recWrap").style.display=data.reception?"block":"none";
+  document.querySelectorAll(".model-opt").forEach(o=>o.classList.toggle("active",o.dataset.model===data.model));
+  renderVenues();
+}
+document.getElementById("btnSave").addEventListener("click",()=>{try{localStorage.setItem("invit3",JSON.stringify(data));document.getElementById("saveState").textContent="Enregistré ✓";setTimeout(()=>document.getElementById("saveState").textContent="Sauvegardé",1400);}catch(e){alert("Erreur");}});
+document.getElementById("btnExport").addEventListener("click",()=>{const b=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=("invit-"+data.name1+"-"+data.name2+".json").toLowerCase().replace(/[^a-z0-9.-]+/g,"-");a.click();});
+document.getElementById("btnImport").addEventListener("click",()=>document.getElementById("importFile").click());
+document.getElementById("importFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=Object.assign(DEFAULT(),JSON.parse(r.result));if(!Array.isArray(data.venues))data.venues=[];sync();render();document.getElementById("saveState").textContent="Importé ✓";}catch(x){alert("JSON invalide");}};r.readAsText(f);e.target.value="";});
+document.getElementById("btnNew").addEventListener("click",()=>{if(!confirm("Nouvelle invitation vierge ?"))return;data=DEFAULT();data.name1="";data.name2="";data.venues=[];sync();render();document.getElementById("saveState").textContent="Nouveau";});
+document.querySelectorAll(".ptab").forEach(t=>t.addEventListener("click",()=>{document.querySelectorAll(".ptab").forEach(x=>x.classList.remove("active"));t.classList.add("active");const v=t.dataset.view;document.getElementById("stageRender").style.display=v==="render"?"flex":"none";document.getElementById("stageJson").style.display=v==="json"?"flex":"none";}));
+(function(){const s=localStorage.getItem("invit3");if(s){try{data=Object.assign(DEFAULT(),JSON.parse(s));if(!Array.isArray(data.venues))data.venues=[];}catch(e){}}sync();render();})();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}
+</script>
+</body>
+</html>
