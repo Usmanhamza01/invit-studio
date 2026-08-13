@@ -1,0 +1,5 @@
+# Cloudflare Pages : toute adresse /xxx sert la page publique (qui lit le slug)
+# Les vrais fichiers (assets, admin) sont servis en priorité, donc non affectés.
+/assets/*   /assets/:splat   200
+/admin      /app.html        200
+/*          /invitation.html 200
