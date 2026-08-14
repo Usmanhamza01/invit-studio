@@ -11,7 +11,7 @@ CE QUE TU OBTIENS
 
 CONTENU DU DOSSIER
   • app.html            → l'admin (formulaire de création)
-  • invitation.html     → la page publique (lue par les invités)
+  • index.html          → la page publique (lue par les invités)
   • assets/             → les images du modèle
   • _redirects          → routage des liens propres (Cloudflare)
   • supabase-schema.sql → à exécuter dans Supabase
@@ -29,7 +29,7 @@ CONTENU DU DOSSIER
 ───────────────────────────────────────────────────────────────
   ÉTAPE 2 — CONFIGURER LES 2 FICHIERS
 ───────────────────────────────────────────────────────────────
-  Ouvre invitation.html ET app.html, cherche tout en haut du
+  Ouvre index.html ET app.html, cherche tout en haut du
   script les lignes :
        const SUPABASE_URL  = "https://TON-PROJET.supabase.co";
        const SUPABASE_ANON = "TA_CLE_ANON_PUBLIQUE";
@@ -43,7 +43,7 @@ CONTENU DU DOSSIER
   ÉTAPE 3 — DÉPLOYER SUR CLOUDFLARE PAGES (une fois)
 ───────────────────────────────────────────────────────────────
   1. Pousse ce dossier sur un dépôt GitHub
-     (app.html, invitation.html, assets/, _redirects)
+     (app.html, index.html, assets/, _redirects)
   2. Cloudflare dashboard → Pages → Create → connecte le dépôt
   3. Build command : (laisse vide)   Output : /
   4. Deploy. Tu obtiens une URL : https://xxx.pages.dev
@@ -53,7 +53,7 @@ CONTENU DU DOSSIER
 ───────────────────────────────────────────────────────────────
   UTILISATION QUOTIDIENNE (par client, SANS déploiement)
 ───────────────────────────────────────────────────────────────
-  1. Ouvre  ton-site.pages.dev/admin   (ou app.html en local)
+  1. Ouvre  invit-studio.pages.dev/app.html
   2. Remplis le formulaire du client
   3. Vérifie/modifie le "lien personnalisé" (slug)
   4. Clique "Publier en ligne"

@@ -240,7 +240,7 @@ document.getElementById("btnPublish").addEventListener("click", async ()=>{
   let slug=slugify(slugEl.value)|| slugify(data.name1+"-"+data.name2);
   slugEl.value=slug;
   if(!slug){ alert("Renseigne au moins les prénoms ou un lien personnalisé."); return; }
-  if(SUPABASE_ANON.indexOf("COLLE_TA_CLE")>=0){ alert("Colle d'abord ta clé Supabase (SUPABASE_ANON) en haut du script."); return; }
+  if(SUPABASE_URL.indexOf("TON-PROJET")>=0){ alert("Configure d'abord SUPABASE_URL et SUPABASE_ANON en haut du script (voir le guide)."); return; }
   const btn=document.getElementById("btnPublish"); btn.textContent="Publication…"; btn.disabled=true;
   try{
     // upsert par slug
