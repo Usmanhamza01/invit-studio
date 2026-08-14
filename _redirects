@@ -1,3 +1,0 @@
-# Les fichiers réels (assets, app.html) sont servis en priorité.
-# Toute autre adresse /xxx (un slug) sert index.html qui lit le slug.
-/*   /index.html   200
