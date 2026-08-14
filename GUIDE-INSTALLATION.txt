@@ -1,0 +1,75 @@
+═══════════════════════════════════════════════════════════════
+  INVIT'STUDIO CLOUD — Installation (une seule fois)
+  Après ça : plus jamais de re-déploiement par client !
+═══════════════════════════════════════════════════════════════
+
+CE QUE TU OBTIENS
+  • Un site déployé UNE fois sur Cloudflare Pages
+  • Pour chaque mariage : tu remplis le formulaire → "Publier"
+    → tu obtiens un lien propre : tonsite.pages.dev/aissatou-moussa
+  • Aucun re-déploiement. Les données vivent dans Supabase.
+
+CONTENU DU DOSSIER
+  • app.html            → l'admin (formulaire de création)
+  • index.html          → la page publique (lue par les invités)
+  • assets/             → les images du modèle
+  • _redirects          → routage des liens propres (Cloudflare)
+  • supabase-schema.sql → à exécuter dans Supabase
+
+───────────────────────────────────────────────────────────────
+  ÉTAPE 1 — SUPABASE (5 min)
+───────────────────────────────────────────────────────────────
+  1. Crée un nouveau projet sur supabase.com
+  2. Ouvre "SQL Editor" → New query
+  3. Colle tout le contenu de supabase-schema.sql → Run
+  4. Va dans Project Settings → API, et note :
+       - Project URL      (ex: https://abcd.supabase.co)
+       - anon public key  (une longue clé)
+
+───────────────────────────────────────────────────────────────
+  ÉTAPE 2 — CONFIGURER LES 2 FICHIERS
+───────────────────────────────────────────────────────────────
+  Ouvre index.html ET app.html, cherche tout en haut du
+  script les lignes :
+       const SUPABASE_URL  = "https://TON-PROJET.supabase.co";
+       const SUPABASE_ANON = "TA_CLE_ANON_PUBLIQUE";
+  Remplace par tes vraies valeurs (les mêmes dans les 2 fichiers).
+
+  Dans app.html, mets aussi :
+       const PUBLIC_BASE = "https://ton-site.pages.dev";
+  (tu auras cette URL après l'étape 3, reviens la mettre)
+
+───────────────────────────────────────────────────────────────
+  ÉTAPE 3 — DÉPLOYER SUR CLOUDFLARE PAGES (une fois)
+───────────────────────────────────────────────────────────────
+  1. Pousse ce dossier sur un dépôt GitHub
+     (app.html, index.html, assets/, _redirects)
+  2. Cloudflare dashboard → Pages → Create → connecte le dépôt
+  3. Build command : (laisse vide)   Output : /
+  4. Deploy. Tu obtiens une URL : https://xxx.pages.dev
+  5. Reviens mettre cette URL dans PUBLIC_BASE (app.html),
+     re-commit. (C'est le SEUL moment où tu redéploies.)
+
+───────────────────────────────────────────────────────────────
+  UTILISATION QUOTIDIENNE (par client, SANS déploiement)
+───────────────────────────────────────────────────────────────
+  1. Ouvre  invit-studio.pages.dev/app.html
+  2. Remplis le formulaire du client
+  3. Vérifie/modifie le "lien personnalisé" (slug)
+  4. Clique "Publier en ligne"
+  5. Copie le lien → envoie-le au client 🎉
+
+  Le client ouvre  ton-site.pages.dev/aissatou-moussa
+  → son invitation s'affiche (chargée depuis Supabase).
+
+───────────────────────────────────────────────────────────────
+  NOTES
+───────────────────────────────────────────────────────────────
+  • Modifier une invitation déjà publiée : re-remplis avec le
+    MÊME slug et re-clique "Publier" (ça écrase l'ancienne).
+  • Sécurité : pour l'instant tout le monde peut publier. Quand
+    tu voudras que seul TOI puisses publier, on ajoutera un login
+    Supabase (Auth) — dis-le moi.
+  • Le bouton "Exporter HTML" reste dispo si tu veux une version
+    fichier (sans Supabase) pour un cas particulier.
+═══════════════════════════════════════════════════════════════
