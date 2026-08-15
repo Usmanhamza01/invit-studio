@@ -95,7 +95,6 @@ body.app{font-family:'Inter',sans-serif;background:var(--abg);color:var(--aink);
       </div>
       <div class="field"><label>Message d'accueil</label><input id="f_eyebrow" value="Nous vous convions au mariage de"></div>
       <div class="frow">
-        <div class="field"><label>Date</label><input id="f_date" value="12 · 12 · 2026"></div>
         <div class="field"><label>Lieu (ville)</label><input id="f_city" value="Dakar, Sénégal"></div>
       </div>
 
@@ -108,7 +107,7 @@ body.app{font-family:'Inter',sans-serif;background:var(--abg);color:var(--aink);
       <div id="venueList"></div>
       <button class="add-v" id="addVenue">+ Ajouter un lieu</button>
 
-      <div class="sh">Photos avant le mariage</div>
+      <div class="sh">Photos Pre wedding</div>
       <div style="font-size:11px;color:var(--asoft);margin-bottom:8px;">Optionnel — crée une page mosaïque dans l'invitation si tu ajoutes au moins une photo.</div>
       <input type="file" id="galFile" accept="image/*" multiple style="display:none;">
       <button class="btn btn-g" id="galAddBtn" type="button">+ Ajouter des photos</button>
@@ -162,8 +161,7 @@ const DEFAULT = () => ({
   intro:"Deux âmes, une seule histoire.\nVenez célébrer notre union.",
   introSub:"Bismillah · Au nom de Dieu",
   verse:"Parmi Ses signes, Il a créé pour vous, de vous-mêmes, des épouses — Coran, Ar-Rûm 30:21",
-  date:"12 · 12 · 2026", city:"Dakar, Sénégal",
-  cover:"assets/ivoire-gatefold2.webp", fond:"assets/ivoire-cover.webp", introImg:"assets/intro-arche2.webp",
+  cover:"assets/ivoire-gatefold2.webp", fond:"assets/ivoire-gatefold2.webp", introImg:"assets/intro-arche2.webp",
   venues:[
     {tag:"10h00", title:"Maison du marié", detail:"Ouakam, Dakar", lat:"14.7245", lng:"-17.4913"},
     {tag:"13h00", title:"Mosquée", detail:"Ouakam, Dakar", lat:"14.7180", lng:"-17.4890"},
