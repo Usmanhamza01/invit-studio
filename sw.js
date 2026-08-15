@@ -1,6 +1,6 @@
 const CACHE="invitstudio-admin-v1";
 const ASSETS=["/app.html","/manifest.json","/icon-192.png","/icon-512.png",
-  "/assets/ivoire-gatefold2.webp","/assets/ivoire-cover.webp","/assets/intro-arche.webp"];
+  "/assets/ivoire-gatefold2.webp","/assets/ivoire-cover.webp","/assets/intro-arche2.webp","/assets/bismillah-calligraphy.webp"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).catch(()=>{}));self.skipWaiting();});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==CACHE).map(x=>caches.delete(x)))));self.clients.claim();});
 self.addEventListener("fetch",e=>{
