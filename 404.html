@@ -53,6 +53,7 @@ function getSlug(){
 
 // transforme les chemins d'images relatifs en absolus (pour l'iframe)
 function absolutize(data){
+  if(data && data.fond === "assets/ivoire-cover.webp"){ data.fond = "assets/ivoire-gatefold2.webp"; } // migration ancienne image
   ["cover","fond","introImg"].forEach(k=>{
     if(data[k] && data[k].indexOf("assets/")===0) data[k]="/"+data[k];
   });

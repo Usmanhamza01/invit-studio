@@ -380,10 +380,11 @@ document.getElementById("btnExport").addEventListener("click",()=>{
   alert("index.html téléchargé.\n\nMets-le dans un dossier avec le sous-dossier 'assets' (les 3 images), puis déploie sur GitHub Pages.\n\nAstuce : le bouton JSON permet aussi d'exporter/réimporter les infos.");
 });
 document.getElementById("btnImport").addEventListener("click",()=>document.getElementById("importFile").click());
-document.getElementById("importFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=Object.assign(DEFAULT(),JSON.parse(r.result));if(!Array.isArray(data.venues))data.venues=[];sync();render();document.getElementById("saveState").textContent="Importé ✓";}catch(x){alert("JSON invalide");}};r.readAsText(f);e.target.value="";});
+document.getElementById("importFile").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{data=migrateOldFond(Object.assign(DEFAULT(),JSON.parse(r.result)));if(!Array.isArray(data.venues))data.venues=[];sync();render();document.getElementById("saveState").textContent="Importé ✓";}catch(x){alert("JSON invalide");}};r.readAsText(f);e.target.value="";});
 document.getElementById("btnNew").addEventListener("click",()=>{if(!confirm("Nouvelle invitation vierge ?"))return;data=DEFAULT();data.name1="";data.name2="";data.venues=[];sync();render();document.getElementById("saveState").textContent="Nouveau";});
 document.querySelectorAll(".ptab").forEach(t=>t.addEventListener("click",()=>{document.querySelectorAll(".ptab").forEach(x=>x.classList.remove("active"));t.classList.add("active");const v=t.dataset.view;document.getElementById("stageRender").style.display=v==="render"?"flex":"none";document.getElementById("stageJson").style.display=v==="json"?"flex":"none";}));
-(function(){const s=localStorage.getItem("invit3");if(s){try{data=Object.assign(DEFAULT(),JSON.parse(s));if(!Array.isArray(data.venues))data.venues=[];}catch(e){}}sync();render();})();
+function migrateOldFond(d){ if(d && d.fond === "assets/ivoire-cover.webp"){ d.fond = "assets/ivoire-gatefold2.webp"; } return d; }
+(function(){const s=localStorage.getItem("invit3");if(s){try{data=migrateOldFond(Object.assign(DEFAULT(),JSON.parse(s)));if(!Array.isArray(data.venues))data.venues=[];}catch(e){}}sync();render();})();
 if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(()=>{}));}
 </script>
 </body>
